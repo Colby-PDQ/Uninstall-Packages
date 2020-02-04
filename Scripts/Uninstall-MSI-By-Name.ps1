@@ -1,7 +1,7 @@
 # Written by Colby Bouma
 # This script attempts to search the registry for the GUID of the specified application and uninstall it with MsiExec
 # 
-# https://github.com/Colby-PDQ/Uninstall-MSI-By-Name/blob/master/Uninstall-MSI-By-Name.ps1
+# https://github.com/Colby-PDQ/Uninstall-Packages/blob/master/Scripts/Uninstall-MSI-By-Name.ps1
 
 #Requires -Version 3
 

@@ -63,7 +63,7 @@
         </PowerShellStep>
         <InstallStep>
           <CustomCommandLine></CustomCommandLine>
-          <FileName>$(Repository)\Custom\Uninstall-MSI-By-Name\Uninstall-MSI-By-Name.ps1</FileName>
+          <FileName>$(Repository)\Custom\Uninstall-Packages\Scripts\Uninstall-MSI-By-Name.ps1</FileName>
           <Files></Files>
           <IncludeDirectory value="false" />
           <LeaveInstallFile value="false" />
@@ -235,7 +235,7 @@ ForEach ( $UserDir in $AllUsers.FullName ) {
     <Description>https://github.com/Colby-PDQ/Uninstall-Packages/blob/master/Uninstall%20Adobe%20Flash%20Player%20ActiveX.xml</Description>
     <NewLibraryPackageVersionId value="null" />
     <OriginalId value="null" />
-    <Version>1</Version>
+    <Version>2</Version>
     <IsAutoDownload value="false" />
     <FolderId value="8" />
     <LibraryPackageVersionId value="null" />
@@ -244,7 +244,7 @@ ForEach ( $UserDir in $AllUsers.FullName ) {
     <PackageDisplaySettings name="DisplaySettings">
       <DisplayType>Normal</DisplayType>
       <IconKey>Icon-Package</IconKey>
-      <SortOrder value="7" />
+      <SortOrder value="0" />
     </PackageDisplaySettings>
   </Package>
 </AdminArsenal.Export>

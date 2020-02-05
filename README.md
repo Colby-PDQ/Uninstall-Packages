@@ -13,3 +13,12 @@ Please look at the packages before deploying them to make sure they'll work in y
 * Open each package to make sure it does what you want (see the warning above).
 * To update, navigate to the Uninstall-Packages folder and run `git pull`.
 * Delete and re-import any updated packages. Make sure to set your schedules back up!
+
+# How to enable "Nice Mode"
+
+If you would like these packages to fail their "Stop processes" step when they detect running processes (because you want to be nice to your users):
+
+* In PDQ Deploy, go to Options --> Variables.
+* Make sure you're on the Custom tab.
+* Create a new Variable named "DontStopProcesses".
+* Put anything in the Value. I recommend "yes", but "1337 h4x0r" works too :D

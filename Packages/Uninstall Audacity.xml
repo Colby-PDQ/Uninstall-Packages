@@ -19,10 +19,6 @@
           <InventoryCollectionName></InventoryCollectionName>
           <TypeName>Collection</TypeName>
         </PackageStepCondition>
-        <PackageStepCondition>
-          <Version>V3, V4, V5</Version>
-          <TypeName>PowerShellVersion</TypeName>
-        </PackageStepCondition>
       </Conditions>
       <CopyMode>Default</CopyMode>
       <DelayedApprovalTimeSpan>7.00:00:00</DelayedApprovalTimeSpan>
@@ -40,7 +36,7 @@
           <MsiOperation>Install</MsiOperation>
           <MsiQuiet value="true" />
           <MsiRestart>Never</MsiRestart>
-          <Parameters>-ProcessNames "iexplore*", "FlashPlayerApp*" -DontStopProcesses "@(DontStopProcesses)"</Parameters>
+          <Parameters>-ProcessNames "audacity", "lame" -DontStopProcesses "@(DontStopProcesses)"</Parameters>
           <SuccessCodes>0,1641,3010,2359302</SuccessCodes>
           <RunAs value="null" />
           <Conditions type="list">
@@ -61,7 +57,7 @@
             </PackageStepCondition>
           </Conditions>
           <ErrorMode>StopDeploymentFail</ErrorMode>
-          <Title>Stop Internet Explorer and Flash processes</Title>
+          <Title>Stop Audacity and LAME processes</Title>
           <TypeName>Install</TypeName>
           <IsEnabled value="true" />
           <IsPostStep value="false" />
@@ -69,14 +65,14 @@
         </InstallStep>
         <InstallStep>
           <CustomCommandLine></CustomCommandLine>
-          <FileName>$(Repository)\Custom\Uninstall-Packages\Scripts\Uninstall-MSI-By-Name.ps1</FileName>
+          <FileName>$(Repository)\Custom\Uninstall-Packages\Scripts\Uninstall-EXE-ProgramFiles.ps1</FileName>
           <Files></Files>
           <IncludeDirectory value="false" />
           <LeaveInstallFile value="false" />
           <MsiOperation>Install</MsiOperation>
           <MsiQuiet value="true" />
           <MsiRestart>Never</MsiRestart>
-          <Parameters>-ApplicationName "Adobe Flash Player * ActiveX" -ApplicationPublisher "Adobe*"</Parameters>
+          <Parameters>-UninstallSuffix "Audacity\unins00*.exe" -ListOfArguments "/VERYSILENT"</Parameters>
           <SuccessCodes>0,1641,3010,2359302</SuccessCodes>
           <RunAs value="null" />
           <Conditions type="list">
@@ -96,8 +92,44 @@
               <TypeName>Collection</TypeName>
             </PackageStepCondition>
           </Conditions>
-          <ErrorMode>Continue</ErrorMode>
-          <Title>Uninstall</Title>
+          <ErrorMode>StopDeploymentFail</ErrorMode>
+          <Title>Uninstall Audacity</Title>
+          <TypeName>Install</TypeName>
+          <IsEnabled value="true" />
+          <IsPostStep value="false" />
+          <IsPreStep value="false" />
+        </InstallStep>
+        <InstallStep>
+          <CustomCommandLine></CustomCommandLine>
+          <FileName>$(Repository)\Custom\Uninstall-Packages\Scripts\Uninstall-EXE-ProgramFiles.ps1</FileName>
+          <Files></Files>
+          <IncludeDirectory value="false" />
+          <LeaveInstallFile value="false" />
+          <MsiOperation>Install</MsiOperation>
+          <MsiQuiet value="true" />
+          <MsiRestart>Never</MsiRestart>
+          <Parameters>-UninstallSuffix "Lame For Audacity\unins00*.exe" -ListOfArguments "/SILENT"</Parameters>
+          <SuccessCodes>0,1641,3010,2359302</SuccessCodes>
+          <RunAs value="null" />
+          <Conditions type="list">
+            <PackageStepCondition>
+              <Architecture>Both</Architecture>
+              <Version>All</Version>
+              <TypeName>OperatingSystem</TypeName>
+            </PackageStepCondition>
+            <PackageStepCondition>
+              <IsUserLoggedOn>AlwaysRun</IsUserLoggedOn>
+              <TypeName>LoggedOnUser</TypeName>
+            </PackageStepCondition>
+            <PackageStepCondition>
+              <ConditionMode>None</ConditionMode>
+              <InventoryCollectionId value="null" />
+              <InventoryCollectionName></InventoryCollectionName>
+              <TypeName>Collection</TypeName>
+            </PackageStepCondition>
+          </Conditions>
+          <ErrorMode>StopDeploymentFail</ErrorMode>
+          <Title>Uninstall LAME</Title>
           <TypeName>Install</TypeName>
           <IsEnabled value="true" />
           <IsPostStep value="false" />
@@ -112,7 +144,7 @@
           <MsiOperation>Install</MsiOperation>
           <MsiQuiet value="true" />
           <MsiRestart>Never</MsiRestart>
-          <Parameters>-DirectoriesToDelete "Flash", "Macromedia"</Parameters>
+          <Parameters>-DirectoriesToDelete "Audacity"</Parameters>
           <SuccessCodes>0,1641,3010,2359302</SuccessCodes>
           <RunAs value="null" />
           <Conditions type="list">
@@ -139,21 +171,17 @@
           <IsPostStep value="false" />
           <IsPreStep value="false" />
         </InstallStep>
-        <PowerShellStep>
+        <InstallStep>
           <CustomCommandLine></CustomCommandLine>
+          <FileName>$(Repository)\Custom\Uninstall-Packages\Scripts\Remove-ProgramFiles-Directories.ps1</FileName>
           <Files></Files>
-          <Script>ForEach ( $SystemType in "System32", "SysWOW64" ) {
-
-    $FlashDir = "$env:SystemRoot\$SystemType\Macromed\Flash"
-    if ( Test-Path "$FlashDir" ) {
-
-        "Deleting --- $FlashDir\*"
-        Remove-Item -Force -Recurse -Path "$FlashDir\*"
-
-    }
-
-}</Script>
-          <SuccessCodes>0</SuccessCodes>
+          <IncludeDirectory value="false" />
+          <LeaveInstallFile value="false" />
+          <MsiOperation>Install</MsiOperation>
+          <MsiQuiet value="true" />
+          <MsiRestart>Never</MsiRestart>
+          <Parameters>-DirectoriesToDelete "Audacity"</Parameters>
+          <SuccessCodes>0,1641,3010,2359302</SuccessCodes>
           <RunAs value="null" />
           <Conditions type="list">
             <PackageStepCondition>
@@ -173,27 +201,23 @@
             </PackageStepCondition>
           </Conditions>
           <ErrorMode>StopDeploymentFail</ErrorMode>
-          <Title>Clean Windows directories</Title>
-          <TypeName>PowerShell</TypeName>
+          <Title>Remove Program Files directories</Title>
+          <TypeName>Install</TypeName>
           <IsEnabled value="true" />
           <IsPostStep value="false" />
           <IsPreStep value="false" />
-        </PowerShellStep>
-        <PowerShellStep>
+        </InstallStep>
+        <InstallStep>
           <CustomCommandLine></CustomCommandLine>
+          <FileName>$(Repository)\Custom\Uninstall-Packages\Scripts\Remove-Directories-From-Documents.ps1</FileName>
           <Files></Files>
-          <Script>ForEach ( $Software in "SOFTWARE", "SOFTWARE\Wow6432Node" ) {
-
-    $RegistryKey = "HKLM:\$Software\Macromedia\FlashPlayer*"
-    if ( Test-Path "$RegistryKey" ) {
-
-        "Deleting --- $RegistryKey"
-        Remove-Item -Force -Recurse -Path "$RegistryKey"
-
-    }
-
-}</Script>
-          <SuccessCodes>0</SuccessCodes>
+          <IncludeDirectory value="false" />
+          <LeaveInstallFile value="false" />
+          <MsiOperation>Install</MsiOperation>
+          <MsiQuiet value="true" />
+          <MsiRestart>Never</MsiRestart>
+          <Parameters>-DirectoriesToDelete "Audacity"</Parameters>
+          <SuccessCodes>0,1641,3010,2359302</SuccessCodes>
           <RunAs value="null" />
           <Conditions type="list">
             <PackageStepCondition>
@@ -213,30 +237,30 @@
             </PackageStepCondition>
           </Conditions>
           <ErrorMode>StopDeploymentFail</ErrorMode>
-          <Title>Remove Registry keys</Title>
-          <TypeName>PowerShell</TypeName>
+          <Title>Remove Audacity from all users' Documents</Title>
+          <TypeName>Install</TypeName>
           <IsEnabled value="true" />
           <IsPostStep value="false" />
           <IsPreStep value="false" />
-        </PowerShellStep>
+        </InstallStep>
       </Steps>
       <Timeout value="60" />
       <UseCustomTimeout value="false" />
       <RunAs value="null" />
     </PackageDefinition>
-    <Description>https://github.com/Colby-PDQ/Uninstall-Packages/blob/master/Packages/Uninstall%20Adobe%20Flash%20Player%20ActiveX.xml</Description>
+    <Description>https://github.com/Colby-PDQ/Uninstall-Packages/blob/master/Packages/Uninstall%20Audacity.xml</Description>
     <NewLibraryPackageVersionId value="null" />
     <OriginalId value="null" />
-    <Version>4</Version>
+    <Version>1</Version>
     <IsAutoDownload value="false" />
     <FolderId value="8" />
     <LibraryPackageVersionId value="null" />
-    <Name>Uninstall Adobe Flash Player ActiveX</Name>
-    <Path>Uninstall\Uninstall Adobe Flash Player ActiveX</Path>
+    <Name>Uninstall Audacity</Name>
+    <Path>Uninstall\Uninstall Audacity</Path>
     <PackageDisplaySettings name="DisplaySettings">
       <DisplayType>Normal</DisplayType>
       <IconKey>Icon-Package</IconKey>
-      <SortOrder value="0" />
+      <SortOrder value="2" />
     </PackageDisplaySettings>
   </Package>
 </AdminArsenal.Export>

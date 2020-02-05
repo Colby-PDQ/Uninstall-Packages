@@ -232,10 +232,10 @@ ForEach ( $UserDir in $AllUsers.FullName ) {
       <UseCustomTimeout value="false" />
       <RunAs value="null" />
     </PackageDefinition>
-    <Description>https://github.com/Colby-PDQ/Uninstall-Packages/blob/master/Uninstall%20Adobe%20Flash%20Player%20ActiveX.xml</Description>
+    <Description>https://github.com/Colby-PDQ/Uninstall-Packages/blob/master/Packages/Uninstall%20Adobe%20Flash%20Player%20ActiveX.xml</Description>
     <NewLibraryPackageVersionId value="null" />
     <OriginalId value="null" />
-    <Version>2</Version>
+    <Version>3</Version>
     <IsAutoDownload value="false" />
     <FolderId value="8" />
     <LibraryPackageVersionId value="null" />
